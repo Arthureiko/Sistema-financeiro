@@ -22,10 +22,11 @@ WORKDIR /var/www/html
 COPY ./src /var/www/html
 
 RUN chown -R www-data:www-data /var/www/html \
-    && a2enmod rewrite
+    && chmod -R 755 /var/www/html \
+    && chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache
+
+COPY ./docker/apache/000-default.conf /etc/apache2/sites-available/000-default.conf
 
 EXPOSE 80
 
 CMD ["apache2-foreground"]
-
-
