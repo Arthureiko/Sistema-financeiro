@@ -11,12 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('account_receivables', function (Blueprint $table) {
+        Schema::create('bills_to_pay', function (Blueprint $table) {
             $table->id();
-            $table->decimal('value', 10, 2);
-            $table->date('due_date');
-            $table->boolean('is_paid')->default(false);
-            $table->foreignId('category_id')->constrained()->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -26,6 +22,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('account_receivables');
+        Schema::dropIfExists('bills_to_pay');
     }
 };
