@@ -4,6 +4,9 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CategoriaController;
 use App\Http\Controllers\ContaPagarController;
 use App\Http\Controllers\ContaReceberController;
+use Illuminate\Support\Facades\Log;
+
+Log::info('Rotas API carregadas');
 
 Route::apiResource('categorias', CategoriaController::class);
 

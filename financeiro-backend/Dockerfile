@@ -5,14 +5,17 @@ RUN apt-get update && apt-get install -y \
     libpng-dev \
     libjpeg62-turbo-dev \
     libfreetype6-dev \
+    locales \
+    zip \
+    jpegoptim optipng pngquant gifsicle \
+    vim \
+    unzip \
+    git \
+    curl \
+    libzip-dev \
     libonig-dev \
     libxml2-dev \
-    zip \
-    unzip \
-    curl \
-    git \
-    nano \
-    libzip-dev \
+    libpq-dev \
     && docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd zip
 
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
@@ -23,7 +26,8 @@ COPY ./src /var/www/html
 
 RUN chown -R www-data:www-data /var/www/html \
     && chmod -R 755 /var/www/html \
-    && chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache
+    && a2enmod rewrite \
+    && service apache2 restart
 
 COPY ./docker/apache/000-default.conf /etc/apache2/sites-available/000-default.conf
 
