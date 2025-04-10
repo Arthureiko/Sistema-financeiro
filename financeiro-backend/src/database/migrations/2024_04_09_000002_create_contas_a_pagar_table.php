@@ -18,6 +18,6 @@ return new class extends Migration {
     }
 
     public function down(): void {
-        Schema::dropIfExists('categorias');
+        Schema::dropIfExists('contas_a_pagar');
     }
 };

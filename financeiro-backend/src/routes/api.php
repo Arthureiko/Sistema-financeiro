@@ -6,8 +6,6 @@ use App\Http\Controllers\ContaPagarController;
 use App\Http\Controllers\ContaReceberController;
 use Illuminate\Support\Facades\Log;
 
-Log::info('Rotas API carregadas');
-
 Route::apiResource('categorias', CategoriaController::class);
 
 Route::apiResource('contas-pagar', ContaPagarController::class);
