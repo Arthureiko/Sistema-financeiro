@@ -39,6 +39,17 @@ export default function ModalReceber({
   const [categoriaId, setCategoriaId] = useState<number | "">("");
 
   const salvarConta = async () => {
+    if (
+      !descricao.trim() ||
+      !valor ||
+      !vencimento ||
+      statusPagamento === "" ||
+      categoriaId === ""
+    ) {
+      alert("Por favor, preencha todos os campos obrigatórios.");
+      return;
+    }
+
     const payload = {
       descricao,
       valor: parseFloat(valor),

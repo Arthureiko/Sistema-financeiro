@@ -39,6 +39,17 @@ export default function Modal({
   const [categoriaId, setCategoriaId] = useState<number | "">("");
 
   const salvarConta = async () => {
+    if (
+      !descricao.trim() ||
+      !valor ||
+      !vencimento ||
+      statusPagamento === "" ||
+      categoriaId === ""
+    ) {
+      alert("Por favor, preencha todos os campos obrigatórios.");
+      return;
+    }
+
     const payload = {
       descricao,
       valor: parseFloat(valor),
@@ -50,7 +61,7 @@ export default function Modal({
     try {
       if (modoEdicao && contaSelecionada) {
         await api.put(`/contas-pagar/${contaSelecionada.id}`, payload);
-        alert("Conta criada com sucesso!");
+        alert("Conta atualizada com sucesso!");
       } else {
         await api.post("/contas-pagar", payload);
         alert("Conta criada com sucesso!");
