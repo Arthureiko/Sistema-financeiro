@@ -13,6 +13,7 @@ return new class extends Migration {
             $table->date('vencimento');
             $table->boolean('status_pagamento')->default(false);
             $table->foreignId('categoria_id')->constrained()->onDelete('cascade');
+            $table->unsignedInteger('parcelas')->default(1);
             $table->timestamps();
         });
     }

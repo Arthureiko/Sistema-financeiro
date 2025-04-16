@@ -10,7 +10,7 @@ class ContaPagar extends Model
     protected $table = 'contas_a_pagar';
 
     protected $fillable = [
-        'descricao', 'valor', 'vencimento', 'status_pagamento', 'categoria_id'
+        'descricao', 'valor', 'vencimento', 'status_pagamento', 'categoria_id', 'parcelas'
     ];
 
     public function categoria()
