@@ -13,7 +13,7 @@ type Conta = {
   descricao: string;
   valor: number;
   vencimento: string;
-  status_pagamento: number;
+  status_pagamento: boolean;
   categoria_id: number;
 };
 
@@ -35,17 +35,11 @@ export default function Modal({
   const [descricao, setDescricao] = useState("");
   const [valor, setValor] = useState("");
   const [vencimento, setVencimento] = useState("");
-  const [statusPagamento, setStatusPagamento] = useState<number | "">("");
+  const [statusPagamento, setStatusPagamento] = useState<boolean | "">("");
   const [categoriaId, setCategoriaId] = useState<number | "">("");
 
   const salvarConta = async () => {
-    if (
-      !descricao.trim() ||
-      !valor ||
-      !vencimento ||
-      statusPagamento === "" ||
-      categoriaId === ""
-    ) {
+    if (!descricao.trim() || !valor || !vencimento || categoriaId === "") {
       alert("Por favor, preencha todos os campos obrigatórios.");
       return;
     }
@@ -129,13 +123,16 @@ export default function Modal({
 
         <select
           className="border p-2 mb-2 w-full"
-          value={statusPagamento}
-          onChange={(e) => setStatusPagamento(parseInt(e.target.value))}
+          value={
+            statusPagamento === "" ? "" : statusPagamento ? "true" : "false"
+          }
+          onChange={(e) => {
+            const value = e.target.value === "true";
+            setStatusPagamento(value);
+          }}
         >
-          <option value="">Selecione o Status</option>
-          <option value={1}>Pago</option>
-          <option value={2}>Pendente</option>
-          <option value={3}>Vencido</option>
+          <option value="true">Pago</option>
+          <option value="false">Pendente</option>
         </select>
 
         <select
