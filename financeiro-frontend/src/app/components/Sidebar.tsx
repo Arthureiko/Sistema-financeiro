@@ -7,8 +7,7 @@ import { cn } from "../lib/utils";
 const links = [
   { href: "/", label: "Início" },
   { href: "/pages/categorias", label: "Categorias" },
-  { href: "/pages/contas-a-pagar", label: "Contas a Pagar" },
-  { href: "/pages/contas-a-receber", label: "Contas a Receber" },
+  { href: "/pages/lancamentos", label: "Lançamentos" },
 ];
 
 export default function Sidebar() {

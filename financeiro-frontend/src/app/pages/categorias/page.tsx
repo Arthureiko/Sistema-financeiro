@@ -3,10 +3,12 @@
 import { useEffect, useState } from "react";
 import ModalCategorias from "../../components/ModalCategorias";
 import { api } from "../../services/api";
+import { formatDate } from "../../utils/date";
 
 type Categoria = {
   id: number;
   nome: string;
+  created_at: string;
 };
 
 export default function CategoriasPage() {
@@ -77,6 +79,7 @@ export default function CategoriasPage() {
             <tr className="bg-gray-100 text-left">
               <th className="p-2 border-b">ID</th>
               <th className="p-2 border-b">Nome</th>
+              <th className="p-2 border-b">Data de criação</th>
               <th className="p-2 border-b">Ações</th>
             </tr>
           </thead>
@@ -85,6 +88,9 @@ export default function CategoriasPage() {
               <tr key={categoria.id} className="hover:bg-gray-50">
                 <td className="p-2 border-b">{categoria.id}</td>
                 <td className="p-2 border-b">{categoria.nome}</td>
+                <td className="p-2 border-b">
+                  {formatDate(categoria.created_at)}
+                </td>
                 <td className="p-2 border-b flex gap-2">
                   <button
                     onClick={() => abrirModal(categoria)}

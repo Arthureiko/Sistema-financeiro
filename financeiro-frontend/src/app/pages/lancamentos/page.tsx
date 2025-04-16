@@ -2,7 +2,8 @@
 
 import { useEffect, useState } from "react";
 import { api } from "../../services/api";
-import ModalReceber from "../../components/ModalReceber";
+import { formatDate } from "../../utils/date";
+import Modal from "../../components/Modal";
 
 type Conta = {
   id: number;
@@ -18,7 +19,7 @@ type Categoria = {
   nome: string;
 };
 
-export default function ContasReceber() {
+export default function Lancamentos() {
   const [contas, setContas] = useState<Conta[]>([]);
   const [modalAberto, setModalAberto] = useState(false);
   const [modoEdicao, setModoEdicao] = useState(false);
@@ -26,7 +27,7 @@ export default function ContasReceber() {
   const [categorias, setCategorias] = useState<Categoria[]>([]);
 
   const carregarContas = async () => {
-    const { data } = await api.get("/contas-receber");
+    const { data } = await api.get("/contas-pagar");
     setContas(data);
   };
 
@@ -46,7 +47,7 @@ export default function ContasReceber() {
     if (!confirmar) return;
 
     try {
-      await api.delete(`/contas-receber/${id}`);
+      await api.delete(`/contas-pagar/${id}`);
       alert("Conta deletada com sucesso!");
 
       carregarContas();
@@ -65,7 +66,7 @@ export default function ContasReceber() {
   return (
     <main className="p-6">
       <div className="flex justify-between items-center mb-4">
-        <h2 className="text-xl font-semibold">Contas a Receber</h2>
+        <h2 className="text-xl font-semibold">Contas a Pagar</h2>
         <button
           onClick={() => abrirModal()}
           className="bg-[#FFA947] text-white px-4 py-2 rounded hover:bg-[#e69439] cursor-pointer"
@@ -89,7 +90,7 @@ export default function ContasReceber() {
             <tr key={conta.id} className="border-t">
               <td className="p-3">{conta.descricao}</td>
               <td className="p-3">R$ {conta.valor}</td>
-              <td className="p-3">{conta.vencimento}</td>
+              <td className="p-3">{formatDate(conta.vencimento)}</td>
               <td className="p-3">
                 {conta.status_pagamento === 1 && (
                   <span className="text-green-600 font-semibold">Pago</span>
@@ -110,7 +111,6 @@ export default function ContasReceber() {
                 >
                   Editar
                 </button>
-
                 <button
                   onClick={() => deletarCategoria(conta.id)}
                   className="bg-red-600 text-white px-3 py-1 rounded hover:bg-red-700 cursor-pointer"
@@ -124,7 +124,7 @@ export default function ContasReceber() {
       </table>
 
       {modalAberto && (
-        <ModalReceber
+        <Modal
           onClose={() => setModalAberto(false)}
           carregarContas={carregarContas}
           categorias={categorias}
