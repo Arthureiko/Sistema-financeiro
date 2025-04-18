@@ -6,18 +6,15 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    public function up(): void
-    {
+    public function up(): void {
         Schema::table('contas_a_pagar', function (Blueprint $table) {
-            $table->unsignedInteger('parcelas')->default(1)->after('status_pagamento');
+            $table->integer('parcelas')->default(1);
         });
     }
 
-    public function down(): void
-    {
+    public function down(): void {
         Schema::table('contas_a_pagar', function (Blueprint $table) {
             $table->dropColumn('parcelas');
         });
     }
-
 };
