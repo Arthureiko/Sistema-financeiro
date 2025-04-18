@@ -13,6 +13,7 @@ type Conta = {
   updated_at: string;
   status_pagamento: boolean;
   categoria_id: number;
+  parcelas: string;
 };
 
 type Categoria = {
@@ -71,6 +72,11 @@ export default function Lancamentos() {
     }
   };
 
+  function dividirValorPorParcela(valor: number, parcelas: number): string {
+    const resultado = valor / parcelas;
+    return resultado.toFixed(2);
+  }
+
   useEffect(() => {
     carregarContas();
     api.get("/categorias").then((res) => {
@@ -95,6 +101,7 @@ export default function Lancamentos() {
           <tr className="bg-gray-100 text-left">
             <th className="p-3">Descrição</th>
             <th className="p-3">Valor</th>
+            <th className="p-3">Parcelas</th>
             <th className="p-3">Vencimento</th>
             <th className="p-3">Data de pagamento</th>
             <th className="p-3">Status</th>
@@ -106,6 +113,12 @@ export default function Lancamentos() {
             <tr key={conta.id} className="border-t">
               <td className="p-3">{conta.descricao}</td>
               <td className="p-3">R$ {conta.valor}</td>
+              <td className="p-3">
+                {`${conta.parcelas} x ${dividirValorPorParcela(
+                  conta.valor,
+                  Number(conta.parcelas)
+                )}`}
+              </td>
               <td className="p-3">{formatDate(conta.vencimento)}</td>
               <td className="p-3">
                 {conta.status_pagamento ? formatDate(conta.updated_at) : ""}

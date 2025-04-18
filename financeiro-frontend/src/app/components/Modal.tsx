@@ -15,6 +15,7 @@ type Conta = {
   vencimento: string;
   status_pagamento: boolean;
   categoria_id: number;
+  parcelas: string;
 };
 
 type ModalProps = {
@@ -37,6 +38,7 @@ export default function Modal({
   const [vencimento, setVencimento] = useState("");
   const [statusPagamento, setStatusPagamento] = useState<boolean | "">("");
   const [categoriaId, setCategoriaId] = useState<number | "">("");
+  const [parcela, setParcela] = useState("");
 
   const salvarConta = async () => {
     if (!descricao.trim() || !valor || !vencimento || categoriaId === "") {
@@ -50,6 +52,7 @@ export default function Modal({
       vencimento,
       status_pagamento: statusPagamento,
       categoria_id: categoriaId,
+      parcelas: parcela,
     };
 
     try {
@@ -75,12 +78,14 @@ export default function Modal({
       setVencimento(contaSelecionada.vencimento);
       setStatusPagamento(contaSelecionada.status_pagamento);
       setCategoriaId(contaSelecionada.categoria_id);
+      setParcela(contaSelecionada.parcelas);
     } else {
       setDescricao("");
       setValor("");
       setVencimento("");
       setStatusPagamento("");
       setCategoriaId("");
+      setParcela("");
     }
   }, [modoEdicao, contaSelecionada]);
 
@@ -113,7 +118,13 @@ export default function Modal({
           value={valor}
           onChange={(e) => setValor(e.target.value)}
         />
-
+        <input
+          type="number"
+          placeholder="Parcelas"
+          className="border p-2 mb-2 w-full"
+          value={parcela}
+          onChange={(e) => setParcela(e.target.value)}
+        />
         <input
           type="date"
           className="border p-2 mb-2 w-full"
